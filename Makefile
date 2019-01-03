@@ -1,5 +1,5 @@
 default:
-	echo "This target will not do anything. Please run another."
+	echo "Please run a specific target as this first one will do nothing."
 
 checks:
 ifndef BUCKET
