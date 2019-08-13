@@ -1,4 +1,4 @@
-FROM alpine:3.8
+FROM alpine:3.10.1
 
 RUN apk add --no-cache openssh tcpdump curl mtr nmap nmap-nping bind-tools nginx jq && \
   apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ aws-cli
