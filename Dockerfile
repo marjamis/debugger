@@ -18,7 +18,7 @@ RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
   ln -sf /dev/stderr /var/log/nginx/error.log && \
   ln -sf /files/nginx_default.conf /etc/nginx/conf.d/default.conf && \
   mkdir -p /usr/share/nginx/html && \
-  echo "Hello World" > /usr/share/nginx/html/index.html && \
+  echo "Hello World!!!" > /usr/share/nginx/html/index.html && \
 # Configure the importing of all environment variables from pid 1 to make use of the ECS specific environment variables(Task Roles) for the awscli
   echo 'export $(strings /proc/1/environ)' > /root/.profile && \
 # Changing the motd to remember the above configuration

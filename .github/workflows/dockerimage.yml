@@ -1,28 +1,27 @@
 name: Docker Image CI
 
-on: 
+on:
   push:
     branches:
       - master
 
 jobs:
-
-  build:
- 
+  buildImage:
     runs-on: ubuntu-latest
- 
+    env:
+      REGISTRY: docker.pkg.github.com
+      REPOSITORY: docker.pkg.github.com/marjamis/debugger/debugger
+
     steps:
     - uses: actions/checkout@master
     - name: createPublicSSHKeyFile
       run: |
         echo ${{ secrets.PUBLIC_SSH_KEY }} > ./testing.pub
     - name: Build the Docker image
-      env:
-        REGISTRY: docker.pkg.github.com
-        REPOSITORY: docker.pkg.github.com/marjamis/debugger/debugger
       run: |
         docker build . --file Dockerfile --tag $REPOSITORY:latest
         docker tag $REPOSITORY:latest $REPOSITORY:$(date +%s)
+    - name: Push image to Github Package Registry
+      run: |
         docker login -u ${{ secrets.GITHUB_DOCKER_PUSH_USER }} -p ${{ secrets.GITHUB_DOCKER_PUSH_PASSWD }} $REGISTRY
         docker push $REPOSITORY
-
