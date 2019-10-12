@@ -19,10 +19,10 @@ jobs:
     - name: Build the Docker image
       env:
         REGISTRY: docker.pkg.github.com
-        REPOSITORY: ${{ REGISTRY }}/marjamis/debugger/debugger
+        REPOSITORY: $REGISTRY/$GITHUB_REPOSITORY/debugger
       run: |
-        docker build . --file Dockerfile --tag ${{ REPOSITORY }}:latest
-        docker tag ${{ REPOSITORY }}:latest ${{ REPOSITORY }}:$(date +%s)
-        docker login -u ${{ secrets.GITHUB_DOCKER_PUSH_USER }} -p ${{ secrets.GITHUB_DOCKER_PUSH_PASSWD }} ${{ REGISTRY }}
-        docker push ${{ REPOSITORY }}
+        docker build . --file Dockerfile --tag $REPOSITORY:latest
+        docker tag $REPOSITORY:latest $REPOSITORY:$(date +%s)
+        docker login -u ${{ secrets.GITHUB_DOCKER_PUSH_USER }} -p ${{ secrets.GITHUB_DOCKER_PUSH_PASSWD }} $REGISTRY
+        docker push $REPOSITORY
 
