@@ -17,9 +17,12 @@ jobs:
       run: |
         echo ${{ secrets.PUBLIC_SSH_KEY }} > ./testing.pub
     - name: Build the Docker image
+      env:
+        REGISTRY: docker.pkg.github.com
+        REPOSITORY: ${{ REGISTRY }}/marjamis/debugger/debugger
       run: |
-        docker build . --file Dockerfile --tag debugger:latest
-        docker tag debugger:latest debugger:$(date +%s)
-        docker login -u ${{ secrets.GITHUB_DOCKER_PUSH_USER }} -p ${{ secrets.GITHUB_DOCKER_PUSH_PASSWD }} docker.pkg.github.com
-        docker push docker.pkg.github.com/marjamis/debugger/debugger
+        docker build . --file Dockerfile --tag ${{ REPOSITORY }}:latest
+        docker tag ${{ REPOSITORY }}:latest ${{ REPOSITORY }}:$(date +%s)
+        docker login -u ${{ secrets.GITHUB_DOCKER_PUSH_USER }} -p ${{ secrets.GITHUB_DOCKER_PUSH_PASSWD }} ${{ REGISTRY }}
+        docker push ${{ REPOSITORY }}
 
