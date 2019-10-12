@@ -19,7 +19,7 @@ jobs:
     - name: Build the Docker image
       env:
         REGISTRY: docker.pkg.github.com
-        REPOSITORY: $REGISTRY/$GITHUB_REPOSITORY/debugger
+        REPOSITORY: docker.pkg.github.com/marjamis/debugger/debugger
       run: |
         docker build . --file Dockerfile --tag $REPOSITORY:latest
         docker tag $REPOSITORY:latest $REPOSITORY:$(date +%s)
