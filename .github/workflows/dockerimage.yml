@@ -20,3 +20,6 @@ jobs:
       run: |
         docker build . --file Dockerfile --tag debugger:latest
         docker tag debugger:latest debugger:$(date +%s)
+        docker login -u ${{ secrets.GITHUB_DOCKER_PUSH_USER }} -p ${{ secrets.GITHUB_DOCKER_PUSH_PASSWD }} docker.pkg.github.com
+        docker push docker.pkg.github.com/marjamis/debugger/debugger
+
