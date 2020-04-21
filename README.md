@@ -22,54 +22,55 @@ docker run -dit --name debugger-tcpdump -v ~/.aws/:/root/.aws/ -e BUCKET={bucket
 ### Sample Fargate Task Definition
 ```json
 {
-  "executionRoleArn": "arn:aws:iam::{account}:role/{ecsExecutionRole}",
-  "containerDefinitions": [
-    {
-      "logConfiguration": {
-        "logDriver": "awslogs",
-        "options": {
-          "awslogs-group": "/ecs/testing",
-          "awslogs-region": "us-west-2",
-          "awslogs-stream-prefix": "ecs"
+    "executionRoleArn": "arn:aws:iam::{account}:role/{ecsExecutionRole}",
+    "containerDefinitions": [
+        {
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "/ecs/testing",
+                    "awslogs-region": "us-west-2",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "portMappings": [
+                {
+                    "hostPort": 8022,
+                    "protocol": "tcp",
+                    "containerPort": 8022
+                },
+                {
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "containerPort": 80
+                }
+            ],
+            "environment": [
+                {
+                    "name": "BUCKET",
+                    "value": "{yourbucketname}"
+                },
+                {
+                    "name": "TCPDUMP",
+                    "value": "true"
+                }
+            ],
+            "cpu": 0,
+            "memory": 256,
+            "memoryReservation": 128,
+            "image": "{image}",
+            "essential": true,
+            "name": "accessContainer"
         }
-      },
-      "portMappings": [
-        {
-          "hostPort": 8022,
-          "protocol": "tcp",
-          "containerPort": 8022
-        },
-        {
-          "hostPort": 80,
-          "protocol": "tcp",
-          "containerPort": 80
-        }
-      ],
-      "cpu": 0,
-      "memory": 256,
-      "memoryReservation": 128,
-      "image": "{image}",
-      "essential": true,
-      "name": "accessContainer"
-      "environment": [
-        {
-          "name": "BUCKET",
-          "value": "{mybucketname}"
-        },
-        {
-          "name": "TCPDUMP",
-          "value": "true"
-        }
-    }
-  ],
-  "memory": "512",
-  "taskRoleArn": "arn:aws:iam::{account}:role/{taskRole}",
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
-  "family": "testing",
-  "networkMode": "awsvpc",
-  "cpu": "256"
+    ],
+    "memory": "512",
+    "taskRoleArn": "arn:aws:iam::{account}:role/{taskRole}",
+    "compatibilities": [
+        "EC2",
+        "FARGATE"
+    ],
+    "family": "testing",
+    "networkMode": "awsvpc",
+    "cpu": "256"
 }
 ```
