@@ -1,7 +1,13 @@
 FROM alpine:3.10.1
 
-RUN apk add --no-cache openssh tcpdump curl mtr nmap nmap-nping bind-tools nginx jq && \
-  apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ aws-cli
+RUN apk add --no-cache openssh tcpdump curl mtr nmap nmap-nping bind-tools nginx jq   
+  #apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ aws-cli
+
+# Install aws-cli using pip
+RUN apk -Uuv add groff less python py-pip
+RUN pip install awscli
+RUN apk --purge -v del py-pip
+RUN rm /var/cache/apk/*
 
 ADD files/ /files/
 
