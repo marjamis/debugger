@@ -18,7 +18,7 @@ test: checks
 	curl -f localhost:8023
 
 	# Testing sshd
-	ssh -i ~/.ssh/testing -p 8022 root@localhost -- ip addr
+	# ssh -i ~/.ssh/testing -p 8022 root@localhost -- ip addr
 
 	# Cleanup
 	docker logs debugger-webserver
