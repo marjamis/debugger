@@ -30,6 +30,6 @@ RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
 # Changing the motd to remember the above configuration
   printf '\n\nNOTICE: export $(strings /proc/1/environ) is run on the ash shell profile which makes the aws cli work with Task Roles.\nc' > /etc/motd
 
-COPY ./testing.pub /root/.ssh/authorized_keys
+# COPY ./testing.pub /root/.ssh/authorized_keys
 
 CMD [ "/files/entrypoint.sh" ]
