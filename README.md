@@ -51,6 +51,15 @@ docker run -dit --name debugger-tcpdump -v ~/.aws/:/root/.aws/ -e BUCKET={bucket
       "image": "{image}",
       "essential": true,
       "name": "accessContainer"
+      "environment": [
+        {
+          "name": "BUCKET",
+          "value": "{mybucketname}"
+        },
+        {
+          "name": "TCPDUMP",
+          "value": "true"
+        }
     }
   ],
   "memory": "512",
