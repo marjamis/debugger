@@ -1,7 +1,7 @@
-FROM alpine:3.10.1
+FROM alpine:3.12.0
 
 RUN apk add --no-cache openssh tcpdump curl mtr nmap nmap-nping bind-tools nginx jq && \
-  apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/testing/ aws-cli
+  apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/community/ aws-cli
 
 ADD files/ /files/
 
@@ -12,6 +12,8 @@ RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
   ssh-keygen -f /etc/ssh/ssh_host_ed25519_key -N '' -t ed25519 && \
   sed -i "s/#Port 22/Port 8022/" /etc/ssh/sshd_config && \
   mkdir /root/.ssh && \
+# Temporary hack to ensure ssh keys still work
+  passwd -d root && \
 # Configure some of the basics of nginx
   mkdir /run/nginx/ && \
   ln -sf /dev/stdout /var/log/nginx/access.log && \

@@ -34,4 +34,4 @@ test: checks
 	docker stop -t 2 debugger-tcpdump && docker rm debugger-tcpdump
 
 clean:
-	docker stop debugger-webserver;  docker stop debugger-tcpdump; docker rm debugger-webserver; docker rm debugger-tcpdump; echo OK
+	-docker stop debugger-webserver;  docker stop debugger-tcpdump; docker rm debugger-webserver; docker rm debugger-tcpdump;
