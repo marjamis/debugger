@@ -48,7 +48,7 @@ docker run -dit --name debugger-tcpdump -v ~/.aws/:/root/.aws/ -e BUCKET={bucket
       "environment": [
         {
           "name": "BUCKET",
-          "value": "databackupbucketelblogs"
+          "value": "your-bucket-name-here"
         },
         {
           "name": "TCPDUMP",
