@@ -21,6 +21,12 @@ By default, this will generate a pcap file every 30seconds for 300 times and hav
 docker run -dit --name debugger-tcpdump -v ~/.aws/:/root/.aws/ -e TCPDUMP_BUCKET={s3 bucket} -p 8023:80 -p 8022:8022 debugger
 ```
 
+### SSH into the container
+You can SSH into the container with:
+```bash
+ssh -i {location of SSH private key} -p 8022 -l root {IP or URL of the container}
+```
+
 ### Sample Fargate Task Definition
 ```json
 {
@@ -35,6 +41,20 @@ docker run -dit --name debugger-tcpdump -v ~/.aws/:/root/.aws/ -e TCPDUMP_BUCKET
           "awslogs-stream-prefix": "ecs"
         }
       },
+      "environment": [
+        {
+          "name": "TCPDUMP_BUCKET",
+          "value": "{your-bucket-name}"
+        },
+        {
+          "name": "STRESS_MEMORY_TO",
+          "value": "{memory-in-mb-to-stress-to}"
+        },
+        {
+          "name": "DELETE_INDEX_PAGE_AFTER_SECONDS",
+          "value": "{seconds-until-file-is-deleted}"
+        }
+      ],
       "portMappings": [
         {
           "hostPort": 8022,
@@ -57,10 +77,6 @@ docker run -dit --name debugger-tcpdump -v ~/.aws/:/root/.aws/ -e TCPDUMP_BUCKET
   ],
   "memory": "512",
   "taskRoleArn": "arn:aws:iam::{account}:role/{taskRole}",
-  "compatibilities": [
-    "EC2",
-    "FARGATE"
-  ],
   "family": "testing",
   "networkMode": "awsvpc",
   "cpu": "256"
