@@ -1,6 +1,6 @@
 FROM alpine:3.12.0
 
-RUN apk add --no-cache openssh tcpdump curl mtr nmap nmap-nping bind-tools nginx jq && \
+RUN apk add --no-cache openssh tcpdump curl mtr nmap nmap-nping bind-tools nginx stress-ng jq && \
   apk add --no-cache --repository http://dl-3.alpinelinux.org/alpine/edge/community/ aws-cli
 
 ADD files/ /files/

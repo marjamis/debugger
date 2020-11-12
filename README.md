@@ -9,14 +9,16 @@ A full list of available environment variables:
 
 | Name | Allowed Values | Description |
 | --- | --- | --- |
-| TCPDUMP | true/false | Enables the tcpdumping mechanism. Default is false. |
-| BUCKET | The bucket name | If the TCPDUMP is set to true this will be the bucket that the tcpdumps are put into |
+| TCPDUMP_BUCKET | A valid S3 bucket name | If supplied, TCPDUMPs of the container will run and be outputed to the specified bucket of this environment variable. |
+| STRESS_MEMORY_TO | Any positive number | If supplied, a side process will be executed to exhaust the memory of a container for testing using [stress-ng](http://manpages.ubuntu.com/manpages/xenial/man1/stress-ng.1.html). |
+| DELETE_INDEX_PAGE_AFTER_SECONDS | Any positive number | If supplied, the index.html page used by the nginx process will be removed. This is useful to cause a healthcheck failure when this container must return a HTTP 200 on this file. |
+
 
 ## HowTo's / Samples
 ### Using the inbuilt tcpdump capturing and pushing to S3
 By default, this will generate a pcap file every 30seconds for 300 times and have this offloaded to the specified bucket. Due to it running the AWS CLI it will require the normal SDK permissions for the call out to S3. An example command is:
 ```bash
-docker run -dit --name debugger-tcpdump -v ~/.aws/:/root/.aws/ -e BUCKET={bucket} -e TCPDUMP=true -p 8023:80 -p 8022:8022 debugger
+docker run -dit --name debugger-tcpdump -v ~/.aws/:/root/.aws/ -e TCPDUMP_BUCKET={s3 bucket} -p 8023:80 -p 8022:8022 debugger
 ```
 
 ### Sample Fargate Task Definition
