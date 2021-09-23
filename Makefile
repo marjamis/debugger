@@ -19,7 +19,7 @@ endif
 build: ## Builds the image
 	docker build -t debugger .
 
-test: checks ## Runs through configured tests
+test: checks clean ## Runs through configured tests
 	# Testing running of container
 	docker run -dit --name debugger-webserver -p 8023:80 -p 8022:8022 debugger
 
