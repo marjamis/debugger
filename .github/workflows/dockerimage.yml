@@ -23,5 +23,5 @@ jobs:
         docker tag $REPOSITORY:latest $REPOSITORY:$(date +%s)
     - name: Push image to Github Package Registry
       run: |
-        docker login -u ${{ secrets.GITHUB_DOCKER_PUSH_USER }} -p ${{ secrets.GITHUB_DOCKER_PUSH_PASSWD }} $REGISTRY
+        docker login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} $REGISTRY
         docker push $REPOSITORY
