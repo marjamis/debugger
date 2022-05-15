@@ -24,4 +24,4 @@ jobs:
     - name: Push image to Github Package Registry
       run: |
         docker login -u ${{ github.actor }} -p ${{ secrets.GITHUB_TOKEN }} $REGISTRY
-        docker push $REPOSITORY
+        docker push -a $REPOSITORY
