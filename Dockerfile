@@ -17,8 +17,6 @@ RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
   ln -sf /dev/stdout /var/log/nginx/access.log && \
   ln -sf /dev/stderr /var/log/nginx/error.log && \
   ln -sf /files/nginx_default.conf /etc/nginx/http.d/default.conf && \
-  ln -sf ./www.example.com.crt /etc/nginx/ && \
-  ln -sf ./www.example.com.key /etc/nginx/ && \
   ln -sf /files/nginx.conf /etc/nginx/nginx.conf && \
   mkdir -p /usr/share/nginx/html && \
   echo "Hello World!!!" > /usr/share/nginx/html/index.html && \
@@ -28,5 +26,7 @@ RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
   printf '\n\nNOTICE: export $(strings /proc/1/environ) is run on the ash shell profile which makes the aws cli work with Task Roles.\nc' > /etc/motd
 
 COPY ./testing.pub /root/.ssh/authorized_keys
+COPY ./www.example.com.crt /etc/nginx
+COPY ./www.example.com.key /etc/nginx
 
 CMD [ "/files/entrypoint.sh" ]
