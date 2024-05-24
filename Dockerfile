@@ -1,4 +1,4 @@
-FROM alpine:3.14.2
+FROM alpine:3.19.0
 
 RUN apk add --no-cache openssh tcpdump curl mtr nmap nmap-nping bind-tools nginx stress-ng jq aws-cli
 
@@ -17,6 +17,9 @@ RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa && \
   ln -sf /dev/stdout /var/log/nginx/access.log && \
   ln -sf /dev/stderr /var/log/nginx/error.log && \
   ln -sf /files/nginx_default.conf /etc/nginx/http.d/default.conf && \
+  ln -sf ./www.example.com.crt /etc/nginx/ && \
+  ln -sf ./www.example.com.key /etc/nginx/ && \
+  ln -sf /files/nginx.conf /etc/nginx/nginx.conf && \
   mkdir -p /usr/share/nginx/html && \
   echo "Hello World!!!" > /usr/share/nginx/html/index.html && \
 # Configure the importing of all environment variables from pid 1 to make use of the ECS specific environment variables(Task Roles) for the awscli

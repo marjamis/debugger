@@ -17,6 +17,8 @@ jobs:
     - name: createPublicSSHKeyFile
       run: |
         echo ${{ secrets.PUBLIC_SSH_KEY }} > ./testing.pub
+        echo ${{ secrets.EXAMPLE_CERT }} > ./www.example.com.crt
+        echo ${{ secrets.EXAMPLE_CERT_KEY }} > ./www.example.com.key
     - name: Build the Docker image
       run: |
         docker build . --file Dockerfile --tag $REPOSITORY:latest
